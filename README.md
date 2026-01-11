@@ -1,121 +1,108 @@
 # 🖼️ Reddit Image Scraper
 
-**Téléchargez des images depuis Reddit sans avoir besoin de clés API !**
+**Download images from Reddit without needing any API keys!**
 
-Ce scraper utilise les flux JSON publics de Reddit, ce qui signifie qu'aucune authentification n'est requise.
+This scraper uses Reddit’s public JSON feeds, which means no authentication is required.
 
-## ✨ Fonctionnalités
+## ✨ Features
 
-- ✅ **Aucune API requise** - Utilise les endpoints JSON publics
-- ✅ **Téléchargement parallèle** - Rapide et efficace
-- ✅ **Filtres avancés** - Par score, dimensions, NSFW
-- ✅ **Support multi-sources** - Reddit, Imgur, previews
-- ✅ **Évite les doublons** - Ne re-télécharge pas les fichiers existants
-- ✅ **Interface CLI et GUI** - Choisissez votre mode préféré
-- ✅ **Gestion des erreurs** - Rate limiting, timeouts, etc.
+- ✅ **No API required** – Uses public JSON endpoints
+- ✅ **Parallel downloads** – Fast and efficient
+- ✅ **Advanced filters** – By score, dimensions, NSFW
+- ✅ **Multi-source support** – Reddit, Imgur, previews
+- ✅ **Duplicate avoidance** – Does not re-download existing files
+- ✅ **CLI and GUI interface** – Choose your preferred mode
+- ✅ **Error handling** – Rate limiting, timeouts, etc.
 
 ## 📦 Installation
 
 ```bash
-# Aucune dépendance externe requise !
-# Le script utilise uniquement la bibliothèque standard Python.
+# No external dependencies required!
+# The script uses only the Python standard library.
 
-# Optionnel: Pour l'interface graphique
-pip install tk  # Si non inclus avec votre Python
+# Optional: For the graphical interface
+pip install tk  # If not included with your Python
 ```
 
-## 🚀 Utilisation
+## 🚀 Usage
 
-### Mode Ligne de Commande (CLI)
+### Command Line Mode (CLI)
 
 ```bash
-# Usage basique - télécharge 25 images "hot"
+# Basic usage – downloads 25 "hot" images
 python reddit_image_scraper.py wallpapers
 
-# Télécharger 100 images du top all-time
+# Download 100 images from top all-time
 python reddit_image_scraper.py earthporn --sort top --time all --limit 100
 
-# Images récentes avec score minimum
+# Recent images with minimum score
 python reddit_image_scraper.py pics --sort new --min-score 500 --limit 50
 
-# Images HD uniquement (1920px minimum)
+# HD images only (1920px minimum)
 python reddit_image_scraper.py wallpapers --min-width 1920 --limit 30
 
-# Inclure NSFW
+# Include NSFW
 python reddit_image_scraper.py art --nsfw --limit 25
 ```
 
-### Options CLI
+### CLI Options
 
-| Option | Description | Défaut |
-|--------|-------------|--------|
-| `subreddit` | Nom du subreddit (obligatoire) | - |
-| `-o, --output` | Dossier de destination | `downloads` |
-| `-l, --limit` | Nombre d'images | `25` |
-| `-s, --sort` | Tri: hot, new, top, rising | `hot` |
-| `-t, --time` | Période: hour, day, week, month, year, all | `week` |
-| `--min-score` | Score minimum | `0` |
-| `--min-width` | Largeur minimum | `0` |
-| `--min-height` | Hauteur minimum | `0` |
-| `--nsfw` | Inclure le contenu NSFW | `false` |
-| `--no-skip` | Re-télécharger les existants | `false` |
-| `-w, --workers` | Téléchargements parallèles | `5` |
-| `-q, --quiet` | Mode silencieux | `false` |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `subreddit` | Subreddit name (required) | - |
+| `-o, --output` | Output directory | `downloads` |
+| `-l, --limit` | Number of images | `25` |
+| `-s, --sort` | Sort: hot, new, top, rising | `hot` |
+| `-t, --time` | Time range: hour, day, week, month, year, all | `week` |
+| `--min-score` | Minimum score | `0` |
+| `--min-width` | Minimum width | `0` |
+| `--min-height` | Minimum height | `0` |
+| `--nsfw` | Include NSFW content | `false` |
+| `--no-skip` | Re-download existing files | `false` |
+| `-w, --workers` | Parallel downloads | `5` |
+| `-q, --quiet` | Quiet mode | `false` |
 
-### Mode Interface Graphique (GUI)
-
-```bash
-python reddit_scraper_gui.py
-```
-
-L'interface graphique offre :
-- Champ de saisie du subreddit
-- Options de tri et filtrage
-- Barre de progression
-- Log en temps réel
-- Bouton pour ouvrir le dossier
-
-## 📁 Structure des fichiers
+## 📁 File Structure
 
 ```
 reddit_scraper/
-├── reddit_image_scraper.py  # Script principal (CLI)
-├── reddit_scraper_gui.py    # Interface graphique
+├── reddit_image_scraper.py  # Main script (CLI)
+├── reddit_scraper_gui.py    # Graphical interface
 ├── README.md
-└── downloads/               # Dossier de sortie par défaut
-    └── wallpapers/          # Un sous-dossier par subreddit
-        ├── abc123_titre.jpg
-        └── def456_autre.png
+└── downloads/               # Default output directory
+    └── wallpapers/          # One subfolder per subreddit
+        ├── abc123_title.jpg
+        └── def456_other.png
 ```
 
-## 🔧 Comment ça marche
+## 🔧 How It Works
 
-Le script exploite les endpoints JSON publics de Reddit :
+The script uses Reddit’s public JSON endpoints:
 
 ```
 https://www.reddit.com/r/{subreddit}/{sort}.json
 ```
 
-Ces endpoints ne nécessitent pas d'authentification et retournent les données des posts au format JSON.
+These endpoints do not require authentication and return post data in JSON format.
 
-### Sources d'images supportées
+### Supported Image Sources
 
-- `i.redd.it` - Images Reddit natives
-- `i.imgur.com` - Imgur direct
-- `preview.redd.it` - Previews Reddit
-- Images avec extensions directes (.jpg, .png, .gif, .webp)
-- Reddit Galleries (première image)
+- `i.redd.it` – Native Reddit images
+- `i.imgur.com` – Direct Imgur links
+- `preview.redd.it` – Reddit previews
+- Images with direct extensions (.jpg, .png, .gif, .webp)
+- Reddit galleries (first image only)
 
 ## ⚠️ Limitations
 
-- **Rate Limiting** : Reddit peut limiter les requêtes si vous en faites trop. Le script attend automatiquement en cas de limite.
-- **100 posts par page** : Reddit limite à 100 résultats par requête, mais le script gère automatiquement la pagination.
-- **Pas de vidéos** : Seules les images sont téléchargées, pas les vidéos.
-- **Galleries partielles** : Pour les galleries Reddit, seule la première image est téléchargée.
+- **Rate limiting**: Reddit may limit requests if you make too many. The script automatically waits when rate-limited.
+- **100 posts per page**: Reddit limits results to 100 per request, but the script automatically handles pagination.
+- **No videos**: Only images are downloaded, not videos.
+- **Partial galleries**: For Reddit galleries, only the first image is downloaded.
 
-## 📝 Exemples d'utilisation
+## 📝 Usage Examples
 
-### Télécharger des fonds d'écran HD
+### Download HD wallpapers
 
 ```bash
 python reddit_image_scraper.py wallpapers \
@@ -126,7 +113,7 @@ python reddit_image_scraper.py wallpapers \
     --limit 50
 ```
 
-### Constituer une collection d'art
+### Build an art collection
 
 ```bash
 python reddit_image_scraper.py art \
@@ -136,7 +123,7 @@ python reddit_image_scraper.py art \
     --limit 200
 ```
 
-### Récupérer les images du jour
+### Get today’s images
 
 ```bash
 python reddit_image_scraper.py pics \
@@ -145,24 +132,26 @@ python reddit_image_scraper.py pics \
     --limit 25
 ```
 
-## 🐛 Dépannage
+## 🐛 Troubleshooting
 
 ### "Rate limited"
-Le script attend automatiquement 60 secondes. Vous pouvez aussi réduire `--workers`.
+The script automatically waits 60 seconds. You can also reduce `--workers`.
 
-### Images non téléchargées
-Certaines images peuvent être inaccessibles (supprimées, privées). Le script continue avec les suivantes.
+### Images not downloaded
+Some images may be unavailable (deleted, private). The script continues with the next ones.
 
-### Erreurs SSL
-Le script désactive la vérification SSL pour éviter les problèmes de certificats. 
+### SSL errors
+The script disables SSL verification to avoid certificate issues.
 
-## 📜 Licence
+## 📜 License
 
-MIT License - Utilisez librement ce script.
+Feel free to use this script.
 
-## ⚡ Conseils
+## ⚡ Tips
 
-1. **Commencez petit** : Testez avec `--limit 10` avant de lancer de gros téléchargements
-2. **Utilisez les filtres** : `--min-score` aide à obtenir du contenu de qualité
-3. **Soyez patient** : Respectez les limites de Reddit pour éviter d'être bloqué
-4. **Vérifiez les droits** : Les images restent la propriété de leurs auteurs originaux
+1. **Start small**: Test with `--limit 10` before running large downloads
+2. **Use filters**: `--min-score` helps you get higher-quality content
+3. **Be patient**: Respect Reddit’s limits to avoid getting blocked
+4. **Check usage rights**: Images remain the property of their original authors
+
+# Use a VPN preferably to avoid getting your account banned.
